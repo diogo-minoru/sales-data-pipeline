@@ -1,8 +1,25 @@
 import pandas as pd
-import numpy as np
 
 class Transform:
+
+    def check_required_columns(self, data, required_columns):
+        missing_columns = []
+
+        for column in required_columns:
+            if column not in data.columns:
+                missing_columns.append(column)
+        
+        return missing_columns
+
     def clean_sales_data(self, data):
+
+        required_columns = ["quantity", "unit_price", "order_date", "category", "product", "country"]
+
+        missing_columns = self.check_required_columns(data, required_columns)
+
+        if missing_columns:
+            raise ValueError(f"Missing required columns: {missing_columns}")
+
         data = data.copy()
         
         data["quantity"] = pd.to_numeric(data["quantity"], errors="coerce")
