@@ -20,14 +20,14 @@ class Pipeline:
 
         cleaned_df = self.transformer.clean_sales_data(data)
 
-        logging.info("Cleaned dataframe with %s", len(cleaned_df))
-        logging.info("Total rows removed from raw file %s", len(data) - len(cleaned_df))
+        logging.info("Cleaned rows: %s", len(cleaned_df))
+        logging.info("Rows removed from raw file: %s", len(data) - len(cleaned_df))
 
         summary_by_country = self.transformer.summarize_sales_by_country(cleaned_df)
         summary_by_category = self.transformer.summarize_sales_by_category(cleaned_df)
         
         self.loader.save_as_csv(cleaned_df, processed_file_path)
-        logging.info(f"Saved claned dataframe to {processed_file_path}")
+        logging.info(f"Saved cleaned dataframe to {processed_file_path}")
 
         self.loader.save_as_csv(summary_by_country, summary_by_country_file_path)
         logging.info(f"Saved summarized data by country to {summary_by_country_file_path}")
